@@ -4,3 +4,44 @@ body {
   color: #ffffff;
   font-family: Arial, sans-serif;
 }
+
+/* src/app/globals.css */
+body {
+  background-color: #1e1e1e;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  background-color: #2d2d2d;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  overflow: hidden;
+  display: flex;
+  animation: fadeIn 0.8s ease;
+}
+
+.login-image {
+  width: 50%;
+  object-fit: cover;
+  height: 100%;
+}
+
+.login-form {
+  padding: 40px;
+  width: 50%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
