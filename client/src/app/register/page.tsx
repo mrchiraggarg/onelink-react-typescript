@@ -28,16 +28,7 @@ export default function RegisterPage() {
     return (
         <div className="login-container">
             <div className="login-box">
-                {/* Left Image */}
-                <Image
-                    src="/register-bg.jpg"
-                    alt="Register Visual"
-                    width={500}
-                    height={600}
-                    className="login-image"
-                />
-
-                {/* Right Form */}
+                {/* Left Form */}
                 <div className="login-form">
 
                     <h2 className="text-3xl mb-6 font-semibold text-white">Create an Account</h2>
@@ -95,6 +86,16 @@ export default function RegisterPage() {
                     </p>
 
                 </div>
+
+                {/* Right Image */}
+                <Image
+                    src="/register-bg.jpg"
+                    alt="Register Visual"
+                    width={500}
+                    height={1000}
+                    className="login-image"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
             </div>
         </div>
 
