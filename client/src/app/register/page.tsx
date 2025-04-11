@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import Link from "next/link";
+import { registerUser } from './../../../lib/api';
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -10,19 +11,23 @@ export default function RegisterPage() {
         name: '',
         email: '',
         password: '',
+        confirmPassword: "",
     });
+
+    const [message, setMessage] = useState("");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Registering user:', formData);
-
-        // Later: send data to backend
-        // For now, simulate redirect to dashboard
-        router.push('/dashboard');
+        try {
+            const res = await registerUser(formData);
+            setMessage("Registration successful. Please login.");
+        } catch (err: any) {
+            setMessage(err.response?.data?.message || "Registration failed.");
+        }
     };
 
     return (
@@ -32,55 +37,27 @@ export default function RegisterPage() {
                 <div className="login-form">
 
                     <h2 className="text-3xl mb-6 font-semibold text-white">Create an Account</h2>
-                    <form>
-                        <div className="mb-4">
-                            <label className="form-label text-light">Full Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                className="form-control bg-dark text-white"
-                                value={formData.name}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="form-label text-light">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                className="form-control bg-dark text-white"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="form-label text-light">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                className="form-control bg-dark text-white"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="form-label text-light">Confirm Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                className="form-control bg-dark text-white"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="btn btn-primary w-100">
-                            Sign Up
-                        </button>
+
+                    <form onSubmit={handleSubmit}>
+                        {["name", "email", "password", "confirmPassword"].map((field, i) => (
+                            <div className="mb-3" key={i}>
+                                <label className="form-label text-light">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                                <input
+                                    type={field.includes("password") ? "password" : "text"}
+                                    className="form-control bg-dark text-white"
+                                    name={field}
+                                    value={(formData as any)[field]}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        ))}
+
+                        <button type="submit" className="btn btn-success w-100">Sign Up</button>
                     </form>
+
+                    {message && <p className="mt-3 text-warning">{message}</p>}
+
                     <p className="mt-3 text-muted text-sm">
                         Already have an account? <Link href="/login" className="text-info">Sign In</Link>
                     </p>
