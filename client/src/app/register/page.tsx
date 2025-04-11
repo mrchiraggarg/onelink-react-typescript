@@ -30,7 +30,7 @@ export default function RegisterPage() {
             <div className="login-box">
                 {/* Left Image */}
                 <Image
-                    src="/login-bg.jpg"
+                    src="/register-bg.jpg"
                     alt="Register Visual"
                     width={500}
                     height={600}
