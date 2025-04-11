@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
+import Link from "next/link";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -24,46 +26,77 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="container py-5" style={{ maxWidth: '500px' }}>
-            <h2 className="text-center text-white mb-4">Register</h2>
-            <form onSubmit={handleSubmit} className="bg-dark p-4 rounded shadow">
-                <div className="mb-3">
-                    <label className="form-label text-white">Name</label>
-                    <input
-                        type="text"
-                        name="name"
-                        className="form-control bg-dark text-white border-secondary"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
+        <div className="login-container">
+            <div className="login-box">
+                {/* Left Image */}
+                <Image
+                    src="/login-bg.jpg"
+                    alt="Register Visual"
+                    width={500}
+                    height={600}
+                    className="login-image"
+                />
+
+                {/* Right Form */}
+                <div className="login-form">
+
+                    <h2 className="text-3xl mb-6 font-semibold text-white">Create an Account</h2>
+                    <form>
+                        <div className="mb-4">
+                            <label className="form-label text-light">Full Name</label>
+                            <input
+                                type="text"
+                                name="name"
+                                className="form-control bg-dark text-white"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="form-label text-light">Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                className="form-control bg-dark text-white"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="form-label text-light">Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                className="form-control bg-dark text-white"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="form-label text-light">Confirm Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                className="form-control bg-dark text-white"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100">
+                            Register
+                        </button>
+                    </form>
+                    <p className="mt-3 text-muted text-sm">
+                        Already have an account? <Link href="/login" className="text-info">Login</Link>
+                    </p>
+
                 </div>
-                <div className="mb-3">
-                    <label className="form-label text-white">Email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        className="form-control bg-dark text-white border-secondary"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label text-white">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        className="form-control bg-dark text-white border-secondary"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary w-100">
-                    Register
-                </button>
-            </form>
+            </div>
         </div>
+
     );
 }
