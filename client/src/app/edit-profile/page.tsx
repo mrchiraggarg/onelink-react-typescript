@@ -62,6 +62,7 @@ export default function EditProfile() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         const socialsObj = form.socials.reduce((acc, curr) => {
             if (curr.label && curr.url) acc[curr.label] = curr.url;
             return acc;
