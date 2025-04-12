@@ -1,12 +1,12 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import Link from "next/link";
 import { registerUser } from './../../../lib/api';
 
 export default function RegisterPage() {
-    const router = useRouter();
+    // const router = useRouter();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -24,6 +24,12 @@ export default function RegisterPage() {
         e.preventDefault();
         try {
             const res = await registerUser(formData);
+            setFormData({
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+            });
             setMessage("Registration successful. Please login.");
         } catch (err: any) {
             setMessage(err.response?.data?.message || "Registration failed.");

@@ -11,7 +11,7 @@ export const loginUser = (data: {
 }) => API.post("/auth/login", data);
 
 export const registerUser = async (formData: any) => {
-  const res = await fetch('/api/auth/register', {
+  const res = await fetch('http://localhost:5000/api/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
