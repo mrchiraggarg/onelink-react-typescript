@@ -10,13 +10,8 @@ export const loginUser = (data: {
   password: string;
 }) => API.post("/auth/login", data);
 
-export const registerUser = async (formData: {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}) => {
-  const res = await fetch('/api/register', {
+export const registerUser = async (formData: any) => {
+  const res = await fetch('/api/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -29,5 +24,5 @@ export const registerUser = async (formData: {
     throw new Error(errorData.message || 'Registration failed');
   }
 
-  return res.json();
+  return await res.json();
 };
