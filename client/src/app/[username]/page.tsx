@@ -12,7 +12,7 @@ export default function PublicProfilePage() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/api/users/${username}`);
+                const res = await axios.get(`http://localhost:5000/api/users/${username}`);
                 setUser(res.data);
             } catch (error) {
                 console.error(error);

@@ -78,6 +78,7 @@ export default function EditProfile() {
             await axios.put('http://localhost:5000/api/users/update', {
                 name: form.name,
                 bio: form.bio,
+                username: form.username,
                 avatar: form.avatar,
                 socials: socialsObj,
             }, { headers: { Authorization: `Bearer ${token}` } });
