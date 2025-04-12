@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -39,18 +40,39 @@ export default function DashboardPage() {
         router.push("/login");
     };
 
+    if (!user) return <p className="text-light p-5">Loading...</p>;
+
     return (
-        <div className="container mt-5">
-            <h2 className="mb-4">Dashboard</h2>
-            {user ? (
-                <div>
-                    <p><strong>Name:</strong> {user.name}</p>
-                    <p><strong>Email:</strong> {user.email}</p>
-                    <button onClick={handleLogout} className="btn btn-danger mt-3">Logout</button>
+        <div className="container mt-5 text-white">
+            <div className="row">
+                <div className="col-md-4">
+                    <div className="card bg-dark text-white shadow-lg">
+                        <div className="card-body">
+                            <h3 className="card-title">Welcome, {user.name} 👋</h3>
+                            <p className="card-text">Email: {user.email}</p>
+                            <div className="d-grid gap-2">
+                                <button className="btn btn-primary" onClick={() => router.push('/edit-profile')}>Edit Profile</button>
+                                <button className="btn btn-secondary" onClick={() => router.push(`/profile/${user.username}`)}>View Public Profile</button>
+                                <button className="btn btn-danger" onClick={() => {
+                                    localStorage.removeItem('token');
+                                    router.push('/login');
+                                }}>Logout</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            ) : (
-                <p>Loading...</p>
-            )}
+                {/* You can expand this with more widgets/cards */}
+                <div className="col-md-8">
+                    <div className="card bg-secondary text-white shadow-lg p-3">
+                        <h5 className="mb-3">🎯 Quick Stats</h5>
+                        <ul>
+                            <li>Account Created: {new Date(user.createdAt).toLocaleDateString()}</li>
+                            <li>Public URL: /profile/{user.username}</li>
+                            {/* Add more info here */}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
