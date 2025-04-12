@@ -20,13 +20,17 @@ export default function EditProfile() {
     const [message, setMessage] = useState('');
 
     const fetchProfile = async () => {
-        try {
-            const { data } = await axios.get('/api/users/me');
-            const socialsArr = Object.entries(data.socials || {}).map(([label, url]) => ({ label, url }));
-            setForm({ ...data, socials: socialsArr });
-        } catch (err) {
-            console.error(err);
-        }
+        const token = localStorage.getItem("token");
+
+        const res = await axios.get("http://localhost:5000/api/users/profile", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        const data = res.data;
+        const socialsArr = Object.entries(data.socials || {}).map(([label, url]) => ({ label, url }));
+        setForm({ ...data, socials: socialsArr });
     };
 
     useEffect(() => {
@@ -69,12 +73,13 @@ export default function EditProfile() {
         }, {} as Record<string, string>);
 
         try {
+            const token = localStorage.getItem('token');
             await axios.put('http://localhost:5000/api/users/update', {
                 name: form.name,
                 bio: form.bio,
                 avatar: form.avatar,
                 socials: socialsObj,
-            });
+            }, { headers: { Authorization: `Bearer ${token}` } });
             setMessage('Profile updated successfully!');
             router.push('/dashboard');
         } catch (err) {

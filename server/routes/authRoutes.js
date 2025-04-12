@@ -2,7 +2,7 @@ import express from 'express';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import verifyToken from '../middleware/verifyToken.js';
+import verifyToken from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
@@ -71,6 +71,5 @@ router.get("/me", verifyToken, async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 });
-
 
 export default router;
