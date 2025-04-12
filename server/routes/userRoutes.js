@@ -8,10 +8,17 @@ const router = express.Router();
 // Update User Profile
 router.put('/update', verifyToken, async (req, res) => {
     try {
-        const { name, bio, avatar, socials } = req.body;
+        const { name, username, bio, avatar, socials } = req.body;
+
+        // Check if username already exists
+        const existingUser = await User.findOne({ username, _id: { $ne: req.user.id } });
+        if (existingUser) {
+            return res.status(400).json({ message: "Username already exists" });
+        }
+
         const updatedUser = await User.findByIdAndUpdate(
             req.user.id,
-            { name, bio, avatar, socials },
+            { name, username, bio, avatar, socials },
             { new: true }
         );
         res.status(200).json(updatedUser);

@@ -12,6 +12,7 @@ export default function EditProfile() {
     const router = useRouter();
     const [form, setForm] = useState({
         name: '',
+        username: '',
         bio: '',
         avatar: '',
         socials: [] as SocialLink[],
@@ -94,6 +95,10 @@ export default function EditProfile() {
                 <div className="mb-3">
                     <label>Name</label>
                     <input name="name" value={form.name} onChange={handleChange} className="form-control bg-secondary text-white" />
+                </div>
+                <div className="mb-3">
+                    <label>Username</label>
+                    <input name="username" value={form.username} onChange={handleChange} className="form-control bg-secondary text-white" />
                 </div>
                 <div className="mb-3">
                     <label>Bio</label>
