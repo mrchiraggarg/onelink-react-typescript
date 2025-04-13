@@ -1,5 +1,6 @@
 import express from 'express';
 import verifyToken from '../middleware/authMiddleware.js';
+// import verifyToken from '../middleware/uploadMiddleware.js';
 import { getUserByUsername } from '../controllers/userController.js';
 import User from '../models/User.js';
 
@@ -40,5 +41,8 @@ router.get('/profile', verifyToken, async (req, res) => {
 
 // user profile
 router.get('/:username', getUserByUsername);
+
+// update profile picture
+router.post('/upload-avatar', verifyToken, upload.single('avatar'), uploadAvatar);
 
 export default router;

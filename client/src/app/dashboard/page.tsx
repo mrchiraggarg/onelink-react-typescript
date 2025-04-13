@@ -52,7 +52,7 @@ export default function DashboardPage() {
                             <p className="card-text">Email: {user.email}</p>
                             <div className="d-grid gap-2">
                                 <button className="btn btn-primary" onClick={() => router.push('/edit-profile')}>Edit Profile</button>
-                                <button className="btn btn-secondary" onClick={() => router.push(`/profile/${user.username}`)}>View Public Profile</button>
+                                <button className="btn btn-secondary" onClick={() => router.push(`/${user.username}`)}>View Public Profile</button>
                                 <button className="btn btn-danger" onClick={() => {
                                     localStorage.removeItem('token');
                                     router.push('/login');

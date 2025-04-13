@@ -18,6 +18,9 @@ export default function EditProfile() {
         socials: [] as SocialLink[],
     });
 
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
+
     const [message, setMessage] = useState('');
 
     const fetchProfile = async () => {
@@ -89,6 +92,36 @@ export default function EditProfile() {
         }
     };
 
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setSelectedFile(e.target.files[0]);
+        }
+    };
+
+    const handleUpload = async () => {
+        if (!selectedFile) return;
+
+        const formData = new FormData();
+        formData.append('avatar', selectedFile);
+
+        try {
+            setUploading(true);
+            const res = await axios.post('http://localhost:5000/api/users/upload-avatar', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            alert('Avatar uploaded!');
+            // Optional: refresh profile picture
+        } catch (error) {
+            alert('Failed to upload avatar');
+            console.error(error);
+        } finally {
+            setUploading(false);
+        }
+    };
+
     return (
         <div className="container mt-5 p-4 rounded bg-dark text-light shadow">
             <h2 className="mb-4">Edit Profile</h2>
@@ -108,6 +141,17 @@ export default function EditProfile() {
                 <div className="mb-3">
                     <label>Avatar URL</label>
                     <input name="avatar" value={form.avatar} onChange={handleChange} className="form-control bg-secondary text-white" />
+                </div>
+                <div className="mb-6">
+                    <label className="text-sm font-medium text-gray-300 block mb-2">Upload Profile Picture</label>
+                    <input type="file" accept="image/*" onChange={handleFileChange} className="text-sm bg-gray-900 border p-2 rounded w-full text-white" />
+                    <button
+                        onClick={handleUpload}
+                        className="mt-3 px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded"
+                        disabled={uploading}
+                    >
+                        {uploading ? 'Uploading...' : 'Upload Avatar'}
+                    </button>
                 </div>
 
                 <h5 className="mt-4">Social Links</h5>
